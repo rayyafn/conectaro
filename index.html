@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONECTARO - Conectando Serviços e Profissionais em Rondônia</title>
+  <meta name="description" content="Plataforma digital para solucionar a busca por prestadores de serviços confiáveis em Rondônia e dar visibilidade digital a trabalhadores autônomos.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+</head>
+<body>
+
+  <!-- BANNER TOPO: INFORMAÇÕES REGIONAIS & PROGRAMA CENTELHA 3 -->
+  <div class="regional-top-banner">
+    <div>
+      <span>📍 <strong>Foco Regional:</strong> Rondônia (Porto Velho, Ji-Paraná, Ariquemes, Cacoal e cidades vizinhas)</span>
+      <span class="regional-badge" style="margin-left: 8px;">IFRO - 3º B Informática</span>
+    </div>
+    <div>
+      <span>Simulado <strong>Programa Centelha 3</strong> • Estudante: <em>Evelyn Laí da Costa Caires</em></span>
+      <a href="javascript:void(0)" onclick="openProjectDetailsModal()" style="margin-left: 10px;">Ver Ficha do Projeto</a>
+      <a href="https://youtu.be/k0UBDftMMrY?is=LMC9Lgzv4qVHZ4Bt" target="_blank" style="margin-left: 10px;">🎥 Vídeo Pitch</a>
+    </div>
+  </div>
+
+  <!-- NAVBAR PRINCIPAL COMPACTA & ELEGANTE -->
+  <header class="navbar" id="site-header">
+    <div class="nav-container">
+      <div class="logo-brand" onclick="switchTab('tab-home')" role="button" tabindex="0" aria-label="Ir para a página inicial do ConectaRO" onkeydown="if(event.key==='Enter'||event.key===' ')switchTab('tab-home')">
+        <div class="logo-icon" aria-hidden="true">🤝</div>
+        <div class="logo-text">
+          <h1>CONECTA<span>RO</span></h1>
+          <p class="logo-subtitle">Serviços Confiáveis & Valorização Regional</p>
+        </div>
+      </div>
+
+      <!-- NAVEGAÇÃO DESKTOP -->
+      <nav class="nav-links" id="desktop-nav" aria-label="Navegação principal">
+        <a class="nav-link active" data-tab="tab-home" href="javascript:void(0)">Início & Busca</a>
+        <a class="nav-link" data-tab="tab-client-dashboard" href="javascript:void(0)">Minhas Solicitações</a>
+        <a class="nav-link" data-tab="tab-pro-dashboard" href="javascript:void(0)">Painel do Prestador</a>
+        <a class="nav-link" data-tab="tab-admin" href="javascript:void(0)">Painel Administrativo</a>
+      </nav>
+
+      <!-- SELETOR RÁPIDO DE USUÁRIO & AÇÕES -->
+      <div class="header-actions">
+        <div class="role-switcher-box" title="Alterne rapidamente para testar as visões de Cliente, Prestador e Administrador">
+          <label for="role-select">Perfil:</label>
+          <select id="role-select" class="role-select" aria-label="Selecione o perfil de demonstração">
+            <option value="u_cli_1">Lucas Silva (Cliente)</option>
+            <option value="u_pro_1">Marcos Andrade (Eletricista)</option>
+            <option value="u_pro_2">Ana Paula (Informática/TI)</option>
+            <option value="u_pro_5">Gabriel Menezes (Novato IFRO)</option>
+            <option value="u_adm_1">Administrador (Moderação)</option>
+          </select>
+        </div>
+
+        <button class="btn btn-primary btn-sm btn-header-cta" onclick="openRegisterModal('PROFISSIONAL')" title="Cadastrar Perfil de Prestador">
+          <span class="cta-text-desktop">+ Cadastrar Serviço</span>
+          <span class="cta-text-mobile">+ Serviço</span>
+        </button>
+
+        <!-- BOTÃO TOGGLE HAMBURGUER ACESSÍVEL PARA MOBILE -->
+        <button id="mobile-menu-toggle" class="mobile-toggle-btn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobile-nav-drawer">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MENU / GAVETA MOBILE ACESSÍVEL (SEM SOBREPOSIÇÃO) -->
+    <div id="mobile-nav-drawer" class="mobile-nav-drawer" aria-hidden="true">
+      <nav class="mobile-nav-links" aria-label="Navegação mobile">
+        <a class="mobile-nav-link active" data-tab="tab-home" href="javascript:void(0)">
+          <span class="mobile-nav-icon">🏠</span>
+          <div class="mobile-nav-text">
+            <strong>Início & Busca</strong>
+            <small>Pesquise profissionais com inteligência artificial</small>
+          </div>
+        </a>
+        <a class="mobile-nav-link" data-tab="tab-client-dashboard" href="javascript:void(0)">
+          <span class="mobile-nav-icon">📋</span>
+          <div class="mobile-nav-text">
+            <strong>Minhas Solicitações</strong>
+            <small>Acompanhe e avalie seus pedidos de serviços</small>
+          </div>
+        </a>
+        <a class="mobile-nav-link" data-tab="tab-pro-dashboard" href="javascript:void(0)">
+          <span class="mobile-nav-icon">🛠️</span>
+          <div class="mobile-nav-text">
+            <strong>Painel do Prestador</strong>
+            <small>Gerencie solicitações recebidas e seu perfil</small>
+          </div>
+        </a>
+        <a class="mobile-nav-link" data-tab="tab-admin" href="javascript:void(0)">
+          <span class="mobile-nav-icon">🛡️</span>
+          <div class="mobile-nav-text">
+            <strong>Painel Administrativo</strong>
+            <small>Métricas regionais e moderação de denúncias</small>
+          </div>
+        </a>
+      </nav>
+
+      <div class="mobile-drawer-footer">
+        <button class="btn btn-primary btn-block" onclick="openRegisterModal('PROFISSIONAL'); closeMobileMenu();">
+          + Cadastrar Meu Perfil Profissional
+        </button>
+        <div class="mobile-aux-links">
+          <button class="btn btn-outline btn-sm" onclick="openProjectDetailsModal(); closeMobileMenu();">
+            📄 Ficha Centelha 3 (IFRO)
+          </button>
+          <a href="https://youtu.be/k0UBDftMMrY?is=LMC9Lgzv4qVHZ4Bt" target="_blank" class="btn btn-secondary btn-sm" rel="noopener">
+            🎥 Assistir Pitch
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       CONTEÚDO DA ABA PRINCIPAL (HOME & BUSCA)
+       ========================================== -->
+  <main id="tab-home" class="tab-content active">
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="hero-container">
+        
+        <!-- COLUNA DE APRESENTAÇÃO & TÍTULO EXPRESSIVO -->
+        <div class="hero-content">
+          <div class="hero-tag-badge">
+            <span class="tag-icon">🌱</span>
+            <span>Fortalecendo a Economia Autônoma de Rondônia</span>
+          </div>
+
+          <h2 class="hero-title">
+            Encontre profissionais confiáveis com 
+            <span class="text-gradient">agilidade e recomendação inteligente</span>.
+          </h2>
+
+          <p class="hero-description">
+            O <strong>CONECTARO</strong> conecta quem precisa de serviços práticos do dia a dia a trabalhadores autônomos e pequenos empreendedores locais em Porto Velho e em todo o estado de Rondônia.
+          </p>
+
+          <!-- INDICADORES NUMÉRICOS COMPACTOS E ELEGANTES -->
+          <div class="hero-stats-grid">
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-icon">📊</span>
+                <span class="stat-badge">IBGE</span>
+              </div>
+              <strong class="stat-number">35,3%</strong>
+              <p class="stat-label">População ocupada por conta própria em Rondônia</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-icon">👥</span>
+                <span class="stat-badge">Brasil 2025</span>
+              </div>
+              <strong class="stat-number">26,1 Mi</strong>
+              <p class="stat-label">Trabalhadores autônomos em atividade no país</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-card-header">
+                <span class="stat-icon">📍</span>
+                <span class="stat-badge">Comunidade</span>
+              </div>
+              <strong class="stat-number">100%</strong>
+              <p class="stat-label">Foco no ecossistema e demandas de Rondônia</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD DE BUSCA MODERNO (DESTAQUE VISUAL & IA PRESERVADA) -->
+        <div class="smart-search-wrapper">
+          <div class="smart-search-card">
+            <div class="smart-search-header">
+              <div class="search-title-box">
+                <span class="search-glow-icon">✨</span>
+                <div>
+                  <h3 class="search-main-title">O que você precisa hoje?</h3>
+                  <p class="search-sub-title">Descreva sua necessidade em linguagem comum</p>
+                </div>
+              </div>
+              <span class="smart-search-badge" title="Algoritmo de Interpretação Semântica Ativo">
+                <span class="badge-dot"></span> IA ConectaRO Ativa
+              </span>
+            </div>
+
+            <div class="search-input-group">
+              <div class="textarea-wrapper">
+                <textarea 
+                  id="nlp-search-input" 
+                  class="search-textarea" 
+                  rows="3"
+                  placeholder="Exemplo: 'meu computador está muito lento e não abre programas' ou 'o chuveiro queimou e a tomada deu curto'..."
+                  aria-label="Descreva sua necessidade de serviço"
+                ></textarea>
+              </div>
+
+              <div class="search-controls-bar">
+                <div class="city-selector-wrapper">
+                  <span class="input-icon-prefix">📍</span>
+                  <select id="search-city-filter" class="form-select city-select-custom" aria-label="Selecione a cidade de atendimento em Rondônia">
+                    <option value="todas">Todas as Cidades em RO</option>
+                    <option value="Porto Velho" selected>Porto Velho (Capital)</option>
+                    <option value="Ji-Paraná">Ji-Paraná</option>
+                    <option value="Ariquemes">Ariquemes</option>
+                    <option value="Cacoal">Cacoal</option>
+                    <option value="Vilhena">Vilhena</option>
+                  </select>
+                </div>
+
+                <button id="btn-smart-search" class="btn btn-primary btn-search-action">
+                  <span>🔍 Buscar Profissionais</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- EXEMPLOS RÁPIDOS PARA O USUÁRIO / AVALIADOR CLICAR (PRESERVADOS) -->
+            <div class="examples-pills-container">
+              <span class="examples-label">Sugestões de teste da IA:</span>
+              <div class="examples-pills">
+                <button type="button" class="pill-sample" data-sample="meu computador está muito lento e não abre programas">
+                  💻 <span>computador lento</span>
+                </button>
+                <button type="button" class="pill-sample" data-sample="o chuveiro queimou e a tomada da cozinha deu curto">
+                  ⚡ <span>chuveiro em curto</span>
+                </button>
+                <button type="button" class="pill-sample" data-sample="torneira pingando e vazamento embaixo da pia">
+                  🔧 <span>vazamento na pia</span>
+                </button>
+                <button type="button" class="pill-sample" data-sample="preciso de uma logomarca e artes para loja de roupas">
+                  🎨 <span>logomarca para loja</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- BANNER COM FEEDBACK DO PROCESSAMENTO DA IA (RF15 - PRESERVADO) -->
+            <div id="ai-feedback-banner" class="ai-feedback-banner" role="status" aria-live="polite">
+              <div class="ai-feedback-content">
+                <div class="ai-icon-pulse">🤖</div>
+                <div id="ai-feedback-details">
+                  <!-- Preenchido dinamicamente via app.js -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAINEL DE CONTROLE DA REGRA DE EQUIDADE (RF17 & CA04 - INOVAÇÃO CENTELHA 3) -->
+    <section class="equity-control-panel">
+      <div class="equity-info">
+        <span class="equity-badge">🏆 Inovação do Edital Centelha 3</span>
+        <div>
+          <strong style="color:#0f172a; font-size:0.95rem;">Algoritmo com Regra de Equidade de Visibilidade (RF17 & CA04)</strong>
+          <p style="font-size:0.8rem; color:#64748b; margin:0;">
+            Garante que autônomos novatos (ex: recém-formados no IFRO) tenham visibilidade em posições nobres ao lado de prestadores veteranos.
+          </p>
+        </div>
+      </div>
+
+      <div class="toggle-switch-wrapper">
+        <span style="font-size:0.82rem; font-weight:700; color:#334155;">Equidade Justa:</span>
+        <label class="switch">
+          <input type="checkbox" id="equity-switch" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </section>
+
+    <!-- NAVEGAÇÃO RÁPIDA POR CATEGORIAS (RF06) -->
+    <section class="categories-section">
+      <div class="section-header">
+        <div>
+          <h3>Categorias Técnicas em Destaque</h3>
+          <p>Filtre por especialidade ou clique no card para ver os prestadores cadastrados</p>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="resetFilters()">Limpar Filtros</button>
+      </div>
+
+      <div id="categories-grid" class="categories-grid">
+        <!-- Renderizado dinamicamente via app.js -->
+      </div>
+    </section>
+
+    <!-- LISTAGEM DE PROFISSIONAIS (RF06, RF13, RF16, RF17) -->
+    <section class="professionals-section">
+      <div class="section-header">
+        <div>
+          <h3>Profissionais Recomendados em Rondônia</h3>
+          <p>Perfis verificados, avaliações transparentes e contato direto</p>
+        </div>
+      </div>
+
+      <div id="professionals-grid" class="cards-grid">
+        <!-- Preenchido dinamicamente via app.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       CONTEÚDO DA ABA PAINEL DO PRESTADOR (RF14)
+       ========================================== -->
+  <section id="tab-pro-dashboard" class="tab-content dashboard-wrapper">
+    <div id="pro-dashboard-content">
+      <!-- Gerado dinamicamente via renderProDashboard() -->
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CONTEÚDO DA ABA MINHAS SOLICITAÇÕES (CLIENTE)
+       ========================================== -->
+  <section id="tab-client-dashboard" class="tab-content dashboard-wrapper">
+    <div id="client-dashboard-content">
+      <!-- Gerado dinamicamente via renderClientDashboard() -->
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CONTEÚDO DA ABA PAINEL ADMINISTRATIVO (RF18)
+       ========================================== -->
+  <section id="tab-admin" class="tab-content dashboard-wrapper">
+    <div id="admin-dashboard-content">
+      <!-- Gerado dinamicamente via renderAdminDashboard() -->
+    </div>
+  </section>
+
+  <!-- ==========================================
+       MODAL GENÉRICO PARA INTERAÇÕES
+       ========================================== -->
+  <div id="generic-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="generic-modal-title">Título do Modal</h3>
+        <button id="btn-close-generic-modal" class="btn-close">&times;</button>
+      </div>
+      <div id="generic-modal-body" class="modal-body">
+        <!-- Conteúdo injetado via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       RODAPÉ INSTITUCIONAL & ACADÊMICO
+       ========================================== -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      
+      <!-- COLUNA 1: IDENTIFICAÇÃO INSTITUCIONAL & CRÉDITOS ACADÊMICOS -->
+      <div class="footer-col footer-col-brand">
+        <div class="logo-brand footer-logo" onclick="switchTab('tab-home')" role="button" tabindex="0" aria-label="Ir para a página inicial do ConectaRO" onkeydown="if(event.key==='Enter'||event.key===' ')switchTab('tab-home')">
+          <div class="logo-icon" aria-hidden="true">🤝</div>
+          <div class="logo-text">
+            <span class="footer-brand-title">CONECTA<span class="text-accent">RO</span></span>
+            <span class="footer-brand-subtitle">Serviços Confiáveis & Valorização Regional</span>
+          </div>
+        </div>
+
+        <p class="footer-text-secondary">
+          Plataforma digital para impulsionar a economia local e aproximar trabalhadores autônomos e clientes em Rondônia com rapidez, segurança e justiça na visibilidade digital.
+        </p>
+
+        <div class="academic-credits-card">
+          <div class="academic-tag">🎓 Projeto Acadêmico IFRO</div>
+          <p class="academic-meta">
+            Baseado no <strong>Edital nº 03/2026 — Programa Centelha 3 Rondônia</strong>.<br>
+            Autora: <strong>Evelyn Laí da Costa Caires</strong> • 3º B Informática.
+          </p>
+          <div class="academic-links">
+            <a href="https://youtu.be/k0UBDftMMrY?is=LMC9Lgzv4qVHZ4Bt" target="_blank" rel="noopener" class="academic-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              <span>Assistir Vídeo Pitch</span>
+            </a>
+            <span class="sep-bullet">•</span>
+            <a href="javascript:void(0)" onclick="openProjectDetailsModal()" class="academic-link">
+              <span>Ver Ficha Técnica</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- COLUNA 2: MÓDULOS DO SISTEMA -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Módulos do Sistema</h4>
+        <ul class="footer-link-list">
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="switchTab('tab-home')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span>Busca Inteligente (IA/NLP)</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="switchTab('tab-pro-dashboard')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span>Painel do Prestador</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="switchTab('tab-client-dashboard')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span>Solicitação de Serviços</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="switchTab('tab-admin')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+              <span>Moderação Administrativa</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUNA 3: CIDADES ATENDIDAS EM RONDÔNIA -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Cidades Atendidas (RO)</h4>
+        <ul class="footer-link-list">
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="filterByCity('Porto Velho')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Porto Velho (Capital)</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="filterByCity('Ji-Paraná')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Ji-Paraná</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="filterByCity('Ariquemes')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Ariquemes</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="footer-link" onclick="filterByCity('Cacoal')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span>Cacoal & Vilhena</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- COLUNA 4: SEGURANÇA, PRIVACIDADE & LGPD -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Segurança & LGPD</h4>
+        <div class="footer-security-card">
+          <div class="footer-security-badge">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Conformidade RNF01 a RNF06</span>
+          </div>
+          <p class="footer-security-text">
+            Armazenamento criptografado de credenciais, validação rigorosa em servidor e estrito respeito à privacidade de dados.
+          </p>
+        </div>
+
+        <button class="btn btn-footer-action" onclick="openRecoverPasswordModal()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+          <span>Recuperação de Senha (UC03)</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- SEPARADOR NÍTIDO & PADRONIZADO -->
+    <hr class="footer-divider">
+
+    <!-- FAIXA INFERIOR: COPYRIGHT & ESPECIFICAÇÕES TÉCNICAS -->
+    <div class="footer-bottom">
+      <div class="footer-copyright">
+        © 2026 <strong>CONECTARO</strong> — Plataforma Regional de Conexão de Serviços. Todos os direitos reservados.
+      </div>
+      <div class="footer-tech-stack">
+        Tecnologias: <strong>HTML5 Semântico</strong>, <strong>CSS3 Grid/Flexbox</strong>, <strong>JavaScript ES6+</strong> & <strong>Modelo Relacional SQL</strong>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
