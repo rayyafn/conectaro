@@ -30,34 +30,139 @@ O **CONECTARO** é uma plataforma digital desenvolvida para solucionar a dificul
 
 ---
 
-## 3. Estrutura de Arquivos da Plataforma
+## 3. Instalação e Execução
 
-```
-conectaro/
-│
-├── index.html           # Interface principal completa, moderna e responsiva
-├── styles.css           # Folha de estilos personalizada (Cores Amazônia & Tech)
-├── app.js               # Lógica de negócio, motor de IA heurística, equidade e armazenamento
-├── database.sql         # Script SQL relacional (DDL, DML, triggers e integridade)
-├── server.py            # Servidor HTTP local e API REST (zero dependências externas)
-└── README.md            # Documentação técnica e acadêmica do projeto
+### 3.1 Ambiente
+- **Linguagem e Versão:** Python 3.10+ (ou superior) e JavaScript ES2022 (nativo no navegador).
+- **Servidor ou Ambiente Local:**
+  - Servidor embutido do Python (`server.py`), ou
+  - XAMPP / Apache (`htdocs`), ou
+  - Extensão Live Server (VS Code).
+- **Bibliotecas e Dependências:**
+  - **Zero dependências externas** no backend (utiliza os módulos nativos `http.server`, `socketserver`, `json` e `urllib` da biblioteca padrão do Python).
+  - No frontend, utiliza JavaScript e CSS nativos. Não requer comandos de compilação ou instalação como `npm install` ou `composer install`.
+- **Sistema Operacional Testado:** Windows 10 / Windows 11 (também compatível com Linux e macOS).
+
+---
+
+### 3.2 Banco de Dados
+- **SGBD e Versão:** MySQL 8.0+ ou MariaDB 10.4+ (padrão XAMPP/WampServer).
+- **Nome do Banco de Dados:** `conectaro_db`
+- **Caminho do Script SQL:** [`database.sql`](./database.sql)
+  - **Como Executar via Terminal:**
+    ```bash
+    mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS conectaro_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+    mysql -u root -p conectaro_db < database.sql
+    ```
+  - **Como Executar via phpMyAdmin:**
+    Acesse `http://localhost/phpmyadmin`, crie o banco `conectaro_db` com collation `utf8mb4_unicode_ci` e na aba **Importar**, envie o arquivo `database.sql`.
+
+#### Modelo de Tabelas do Banco de Dados:
+
+| Tabela | Campos principais | Chave primária | Relacionamentos |
+| :--- | :--- | :--- | :--- |
+| **Usuario** | id_usuario, nome, email, senha_hash, telefone, tipo_usuario, cidade, data_cadastro | id_usuario | — |
+| **PerfilProfissional** | id_perfil, id_usuario, descricao_experiencia, cidade, regiao_atendimento, media_avaliacao, total_avaliacoes, recem_cadastrado, avatar_url, verificado | id_perfil | id_usuario → Usuario.id_usuario |
+| **CategoriaServico** | id_categoria, nome_categoria, descricao, icone, ativo | id_categoria | — |
+| **ServicoProfissional** | id_servico_prof, id_perfil, id_categoria, descricao_modalidade | id_servico_prof | id_perfil → PerfilProfissional.id_perfil<br>id_categoria → CategoriaServico.id_categoria |
+| **SolicitacaoServico** | id_solicitacao, id_cliente, id_profissional, id_categoria, descricao_necessidade, endereco_atendimento, status, data_solicitacao, data_finalizacao | id_solicitacao | id_cliente → Usuario.id_usuario<br>id_profissional → PerfilProfissional.id_perfil<br>id_categoria → CategoriaServico.id_categoria |
+| **Avaliacao** | id_avaliacao, id_solicitacao, nota, comentario, data_avaliacao | id_avaliacao | id_solicitacao → SolicitacaoServico.id_solicitacao |
+| **Denuncia** | id_denuncia, id_denunciante, id_alvo_usuario, id_alvo_avaliacao, motivo, status, data_registro | id_denuncia | id_denunciante → Usuario.id_usuario |
+
+- **Dados Iniciais (Seed Data):** O arquivo `database.sql` **já insere automaticamente**:
+  - 8 categorias de serviços essenciais de Rondônia (Informática, Elétrica, Hidráulica, Design, Fotografia, Aulas, Reformas, Estética).
+  - 5 contas de usuários de teste com perfis diversificados (1 Cliente, 3 Prestadores autônomos de Porto Velho, 1 Administrador).
+  - 3 perfis profissionais ativos, incluindo profissional recém-formado do IFRO para teste da regra de equidade de visibilidade.
+  - 1 Trigger SQL (`trg_atualizar_media_avaliacao`) para cálculo automático e recálculo da nota média ao registrar avaliações.
+
+---
+
+### 3.3 Variáveis de Ambiente
+O repositório possui o arquivo [`.env.example`](./.env.example). Para configurar seu ambiente local:
+1. Copie o arquivo `.env.example` para `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   *(No Windows PowerShell: `Copy-Item .env.example .env`)*
+
+2. Explicação de cada variável:
+
+```ini
+# .env.example
+PORT=8000                               # Porta TCP onde o servidor HTTP local escutará
+ENVIRONMENT=development                # Ambiente de execução (development ou production)
+DB_HOST=localhost                       # Endereço do servidor MySQL/MariaDB
+DB_PORT=3306                            # Porta padrão do MySQL
+DB_NAME=conectaro_db                    # Nome do banco de dados relacional
+DB_USER=root                            # Usuário do banco de dados
+DB_PASS=                                # Senha do usuário do banco (em branco no XAMPP)
+SESSION_SECRET=chave_secreta_local      # Segredo para assinatura de sessão/token
 ```
 
 ---
 
-## 4. Como Executar a Aplicação
+### 3.4 Passo a Passo de Instalação
 
-### Opção 1: Abrir diretamente no Navegador (Mais Rápido)
-Basta dar dois cliques no arquivo `index.html` ou abri-lo com qualquer navegador moderno (Google Chrome, Firefox, Microsoft Edge ou Safari). Toda a interatividade, armazenamento local (`localStorage`) e motor de IA funcionam instantaneamente sem necessidade de instalar nada!
+1. **Clonar o repositório:**
+   ```bash
+   git clone https://github.com/rayyafn/conectaro.git
+   ```
 
-### Opção 2: Executar via Servidor Python Local
-No terminal (PowerShell / CMD), dentro da pasta do projeto, execute:
-```bash
-python server.py
+2. **Acessar o diretório do projeto e verificar dependências:**
+   ```bash
+   cd conectaro
+   ```
+   *(Não é necessário executar comando de instalação de dependências, pois o projeto utiliza a biblioteca padrão do Python e JavaScript nativo).*
+
+3. **Criar o banco `conectaro_db` e importar `database.sql`:**
+   ```bash
+   mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS conectaro_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+   mysql -u root -p conectaro_db < database.sql
+   ```
+   *(Ou importe o arquivo `database.sql` pelo phpMyAdmin)*.
+
+4. **Copiar `.env.example` para `.env` e ajustar os dados do banco local:**
+   - No Linux/macOS:
+     ```bash
+     cp .env.example .env
+     ```
+   - No Windows (PowerShell):
+     ```powershell
+     Copy-Item .env.example .env
+     ```
+
+5. **Iniciar o servidor:**
+   - **Comando exato via Python:**
+     ```bash
+     python server.py
+     ```
+   - **Ou no caso do XAMPP:**
+     Copie a pasta `conectaro` para `C:\xampp\htdocs\conectaro` e clique em **Start** no Apache pelo painel do XAMPP.
+
+6. **Abrir no navegador o endereço exato:**
+   - Se rodando via `server.py`:
+     `http://localhost:8000`
+   - Se rodando via XAMPP:
+     `http://localhost/conectaro`
+   - Ou acessar a versão publicada no GitHub Pages:
+     `https://rayyafn.github.io/conectaro/`
+
+---
+
+## 4. Estrutura de Arquivos da Plataforma
+
 ```
-Em seguida, abra o navegador e acesse:
-```
-http://localhost:8000
+conectaro/
+│
+├── .env.example         # Exemplo de configuração de variáveis de ambiente locais
+├── .gitignore           # Regras de exclusão para versionamento Git
+├── index.html           # Interface principal completa, moderna e responsiva
+├── styles.css           # Folha de estilos e Design System (Amazônia & Tech)
+├── app.js               # Lógica de negócio, motor de IA heurística e equidade
+├── database.sql         # Script SQL relacional (DDL, DML, triggers e integridade)
+├── server.py            # Servidor HTTP local e API REST (zero dependências externas)
+├── package.json         # Metadados do projeto
+└── README.md            # Documentação técnica e acadêmica completa da spec
 ```
 
 ---
